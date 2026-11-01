@@ -1,0 +1,41 @@
+<h1>Carrinho</h1>
+
+<% if @line_items.empty? %>
+    <p>Seu carrinho está vazio.</p>
+    <%= link_to "Ver catálogo", catalogo_path %>
+<% else %>
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th><th>Preço</th><th>Quantidade</th><th>Subtotal</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @line_items.each do |item| %>
+                <tr>
+                    <td>
+                        <% if item.produto.imagens.attached? %>
+                        <%= image_tag item.produto.imagens.first, width: 60 %>
+                        <% end %>
+                        <%= item.produto.nome %>
+                    </td>
+                    <td><%= preco_br(item.produto.preco) %></td>
+                    <td>
+                        <%= form_with url: line_item_path(item), method: :patch do |form| %>
+                        <%= form.number_field :quantidade, value: item.quantidade, min: 0 %>
+                        <%= form.submit "Atualizar" %>
+                        <% end %>
+                    </td>
+                    <td><%= preco_br(item.subtotal) %></td>
+                    <td><%= button_to "Remover", line_item_path(item), method: :delete %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <p>Subtotal: <%= preco_br(@car.subtotal) %></p>
+    <p>Frete: <%= preco_br(Car::FRETE_FIXO) %></p>
+    <p><strong>Total: <%= preco_br(@car.total) %></strong></p>
+
+    <%= link_to "Continuar para o pedido", new_pedido_path %>
+<% end %>

@@ -1,0 +1,20 @@
+<h1>Pedido #<%= @pedido.id %></h1>
+<p>Status: <strong><%= @pedido.status %></strong></p>
+
+<p>Nome: <%= @pedido.nome %></p>
+<p>CPF: <%= cpf_formatado(@pedido.cpf) %></p>
+<p>Endereço: <%= @pedido.endereco %></p>
+<p>Pagamento: <%= Pedido::FORMAS_PAGAMENTO[@pedido.forma_pagamento] %></p>
+
+<ul>
+    <% @pedido.line_items.includes(:produto).each do |item| %>
+        <li><%= item.quantidade %> × <%= item.produto.nome %> — <%= preco_br(item.subtotal) %></li>
+    <% end %>
+</ul>
+<p><strong>Total: <%= preco_br(@pedido.total) %></strong></p>
+
+    <% unless @pedido.cancelado? %>
+        <%= button_to "Cancelar pedido", pedido_path(@pedido), method: :patch %>
+    <% end %>
+
+<%= link_to "Voltar ao catálogo", catalogo_path %>

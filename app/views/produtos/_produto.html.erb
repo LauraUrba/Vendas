@@ -1,0 +1,16 @@
+<div id="<%= dom_id produto %>">
+  <div><strong>Nome:</strong> <%= produto.nome %></div>
+  <div><strong>Descrição:</strong> <%= produto.descricao %></div>
+  <div><strong>Preço:</strong> <%= number_to_currency(produto.preco, unit: "R$ ", separator: ",", delimiter: ".") %></div>
+
+  <div>
+    <strong>Fotos:</strong>
+    <% if produto.imagens.attached? %>
+      <% produto.imagens.each do |imagem| %>
+        <%= image_tag imagem, width: 200 %>
+      <% end %>
+    <% else %>
+      Sem fotos
+    <% end %>
+  </div>
+</div>

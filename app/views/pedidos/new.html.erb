@@ -1,0 +1,49 @@
+<h1>Finalizar pedido</h1>
+
+<h2>Resumo</h2>
+<ul>
+    <% @car.line_items.includes(:produto).each do |item| %>
+        <li><%= item.quantidade %> × <%= item.produto.nome %> — <%= preco_br(item.subtotal) %></li>
+    <% end %>
+    </ul>
+    <p>Frete: <%= preco_br(Car::FRETE_FIXO) %></p>
+    <p><strong>Total: <%= preco_br(@car.total) %></strong></p>
+
+    <%= form_with model: @pedido do |form| %>
+    <% if @pedido.errors.any? %>
+        <div style="color: red">
+        <h2>Não foi possível confirmar o pedido:</h2>
+        <ul>
+            <% @pedido.errors.full_messages.each do |mensagem| %>
+            <li><%= mensagem %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+
+    <div>
+        <%= form.label :nome, "Nome", style: "display: block" %>
+        <%= form.text_field :nome %>
+    </div>
+    <div>
+        <%= form.label :email, "E-mail", style: "display: block" %>
+        <%= form.email_field :email %>
+    </div>
+    <div>
+        <%= form.label :cpf, "CPF", style: "display: block" %>
+        <%= form.text_field :cpf, placeholder: "000.000.000-00" %>
+    </div>
+    <div>
+        <%= form.label :endereco, "Endereço de entrega", style: "display: block" %>
+        <%= form.text_field :endereco %>
+    </div>
+
+    <h2>Forma de pagamento</h2>
+    <% Pedido::FORMAS_PAGAMENTO.each do |valor, rotulo| %>
+        <label><%= form.radio_button :forma_pagamento, valor %> <%= rotulo %></label><br>
+    <% end %>
+
+    <%= form.submit "Confirmar compra" %>
+<% end %>
+
+<%= link_to "Voltar ao carrinho", carrinho_path %>

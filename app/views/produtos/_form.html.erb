@@ -1,0 +1,36 @@
+<%= form_with(model: produto) do |form| %>
+  <% if produto.errors.any? %>
+    <div style="color: red">
+      <h2>Não foi possível salvar o produto:</h2>
+      <ul>
+        <% produto.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nome, "Nome", style: "display: block" %>
+    <%= form.text_field :nome %>
+  </div>
+
+  <div>
+    <%= form.label :descricao, "Descrição", style: "display: block" %>
+    <%= form.textarea :descricao %>
+  </div>
+
+  <div>
+    <%= form.label :preco, "Preço", style: "display: block" %>
+    <%= form.number_field :preco, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :imagens, "Fotos do produto (3 ou mais)", style: "display: block" %>
+    <%= form.file_field :imagens, multiple: true, accept: "image/*" %>
+  </div>
+
+  <div>
+    <%= form.submit "Salvar" %>
+  </div>
+<% end %>

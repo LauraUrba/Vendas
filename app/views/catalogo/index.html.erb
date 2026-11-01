@@ -1,0 +1,26 @@
+<h1>Catalogo</h1>
+
+<%= link_to "Carrinho", carrinho_path %>
+
+<%= form_with url: catalogo_path, method: :get do |form| %>
+    <%= form.text_field :busca, value: params[:busca], placeholder: "Buscar produtos..." %>
+    <%= form.submit "Buscar", class: "btn btn-primary" %>
+<% end %>
+
+<% if @produtos.empty? %>
+  <p>Nenhum produto encontrado.</p>
+<% end %>
+
+<% @produtos.each do |produto| %>
+  <div class="produto">
+    <% if produto.imagens.attached? %>
+      <div class="imagens">
+        <%= link_to image_tag(produto.imagens.first, width: 200), catalogo_produto_path(produto) %>
+      </div>
+    <% end %>
+
+    <h2><%= link_to produto.nome, catalogo_produto_path(produto) %></h2>
+    <p><%= truncate(produto.descricao, length: 100) %></p>
+    <p>Preço: <%= number_to_currency(produto.preco, unit: "R$ ", separator: ",", delimiter: ".") %></p>
+  </div>
+<% end %>

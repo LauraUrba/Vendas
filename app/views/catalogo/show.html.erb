@@ -1,0 +1,21 @@
+<%= link_to "← Voltar ao catálogo", catalogo_path %>
+
+<h1><%= @produto.nome %></h1>
+
+<% if @produto.imagens.attached? %>
+  <div class="imagens">
+    <% @produto.imagens.each do |imagem| %>
+      <%= image_tag imagem, width: 300 %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= simple_format(@produto.descricao) %>
+
+<p>Preço: <%= number_to_currency(@produto.preco, unit: "R$ ", separator: ",", delimiter: ".") %></p>
+
+<%= form_with url: line_items_path, method: :post do |form| %>
+  <%= form.hidden_field :produto_id, value: @produto.id %>
+  <%= form.number_field :quantidade, value: 1, min: 1 %>
+  <%= form.submit "Comprar" %>
+<% end %>
