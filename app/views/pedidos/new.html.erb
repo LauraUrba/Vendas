@@ -38,12 +38,14 @@
         <%= form.text_field :endereco %>
     </div>
 
-    <h2>Forma de pagamento</h2>
+        <h2>Forma de pagamento</h2>
     <% Pedido::FORMAS_PAGAMENTO.each do |valor, rotulo| %>
         <label><%= form.radio_button :forma_pagamento, valor %> <%= rotulo %></label><br>
     <% end %>
 
-    <%= form.submit "Confirmar compra" %>
+    <div class="acoes">
+        <%= form.submit "Confirmar compra" %>
+        <%= link_to "Voltar ao carrinho", carrinho_path, class: "button btn-azul" %>
+    </div>
 <% end %>
 
-<%= link_to "Voltar ao carrinho", carrinho_path %>

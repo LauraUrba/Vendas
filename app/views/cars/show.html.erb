@@ -37,5 +37,10 @@
     <p>Frete: <%= preco_br(Car::FRETE_FIXO) %></p>
     <p><strong>Total: <%= preco_br(@car.total) %></strong></p>
 
-    <%= link_to "Continuar para o pedido", new_pedido_path %>
+
+    <div class="acoes">
+        <%= link_to "Continuar para o pedido", new_pedido_path, class: "button" %>
+        <%= link_to "Voltar para o catálogo", catalogo_path, class: "button btn-azul" %>
+    </div>
+
 <% end %>

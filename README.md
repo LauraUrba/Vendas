@@ -460,7 +460,7 @@ bin/rubocop
 - [Ruby on Rails Guides — Sessions](https://guides.rubyonrails.org/action_controller_overview.html#session)
 - [Ruby on Rails Guides — Jbuilder](https://github.com/rails/jbuilder)
 - [PostgreSQL Documentation — Pattern Matching](https://www.postgresql.org/docs/current/functions-matching.html)
-- [esbuild Documentation](https://esbuild.github.io/)
+
 
 ## Vídeos consultados
 

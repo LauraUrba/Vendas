@@ -13,8 +13,10 @@
 </ul>
 <p><strong>Total: <%= preco_br(@pedido.total) %></strong></p>
 
-    <% unless @pedido.cancelado? %>
-        <%= button_to "Cancelar pedido", pedido_path(@pedido), method: :patch %>
-    <% end %>
 
-<%= link_to "Voltar ao catálogo", catalogo_path %>
+    <div class="acoes">
+        <% unless @pedido.cancelado? %>
+            <%= button_to "Cancelar pedido", pedido_path(@pedido), method: :patch, class: "btn-perigo" %>
+        <% end %>
+        <%= link_to "Voltar ao catálogo", catalogo_path, class: "button btn-azul" %>
+    </div>
